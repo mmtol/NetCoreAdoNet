@@ -52,8 +52,21 @@ namespace NetCoreAdoNet
         private void btnEliminar_Click(object sender, EventArgs e)
         {
             //necesitamos el dato de inscripcion concatenado
-            string inscripcion = txtId.Text;
-            string sql = "delete from ENFERMO where INSCRIPCION="+inscripcion;
+            // los params deben ser del mismo tipo de dato que la columna
+            int inscripcion = int.Parse(txtId.Text);
+            string sql = "delete from ENFERMO where INSCRIPCION=@inscripcion";
+            //debemos configurar uno o varios params
+            SqlParameter paramIns = new SqlParameter("@inscripcion", inscripcion);
+            ////nombre del param en la consulta, no puede estar repetido
+            //paramIns.ParameterName = "@inscripcion";
+            //paramIns.DbType = DbType.Int32;
+            ////por defecto la dir es input
+            //paramIns.Direction = ParameterDirection.Input;
+            ////el valor del param para sustituir en la consulta
+            //paramIns.Value = inscripcion;
+            ////agregamos el param a la coleccion
+            command.Parameters.Add(paramIns);
+
             command.Connection = conn;
             command.CommandType = CommandType.Text;
             command.CommandText = sql;
@@ -61,6 +74,8 @@ namespace NetCoreAdoNet
             //las consultas de accion devuelven un int con el numero de los registros afectados
             int registros = command.ExecuteNonQuery();
             conn.Close();
+            //hay que quitarlos para volver a hacerlo
+            command.Parameters.Clear();
             LoadEnfermos();
             MessageBox.Show("Enfermos eliminados: " + registros);
         }
