@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace NetCoreAdoNet.Repositories
@@ -21,61 +22,61 @@ namespace NetCoreAdoNet.Repositories
             command = new SqlCommand();
         }
 
-        private void OpenConn()
+        private async Task OpenConnAsync()
         {
-            conn.Open();
+            await conn.OpenAsync();
         }
 
-        private void CloseConn()
+        private async Task CloseConnAsync()
         {
-            conn.Close(); 
+            await conn.CloseAsync(); 
         }
 
-        private void CloseReader()
+        private async Task CloseReaderAsync()
         {
-            reader.Close();
+            await reader.CloseAsync();
         }
 
-        private void IniciarCommand(string sql)
+        private async Task IniciarCommandAsync(string sql)
         {
             command.Connection = conn;
             command.CommandType = CommandType.Text;
             command.CommandText = sql;
         }
 
-        public List<string> GetNombreSalas()
+        public async Task<List<string>> GetNombreSalasAsync()
         {
             List<string> salas = new List<string>();
 
-            IniciarCommand("salect distinct NOMBRE from SALA");
-            OpenConn();
+            await IniciarCommandAsync("select distinct NOMBRE from SALA");
+            await OpenConnAsync();
 
-            reader = command.ExecuteReader();
+            reader = await command.ExecuteReaderAsync();
             while (reader.Read())
             {
                 salas.Add(reader["NOMBRE"].ToString());
             }
 
-            CloseConn();
-            CloseReader();
+            await CloseConnAsync();
+            await CloseReaderAsync();
 
             return salas;
         }
 
-        public int UpdateSala(string nuevo, string viejo)
+        public async Task<int> UpdateSalaAsync(string nuevo, string viejo)
         {
             int registros;
 
-            IniciarCommand("update SALA set NOMBRE=@nuevo where NOMBRE=@VIEJO");
+            await IniciarCommandAsync("update SALA set NOMBRE=@nuevo where NOMBRE=@VIEJO");
 
             SqlParameter paramNuevo = new SqlParameter("@nuevo", nuevo);
             SqlParameter paramViejo = new SqlParameter("@viejo", viejo);
             command.Parameters.Add(paramNuevo);
             command.Parameters.Add(paramViejo);
 
-            OpenConn();
-            registros = command.ExecuteNonQuery();
-            CloseConn();
+            await OpenConnAsync();
+            registros = await command.ExecuteNonQueryAsync();
+            await CloseConnAsync();
 
             command.Parameters.Clear();
 
