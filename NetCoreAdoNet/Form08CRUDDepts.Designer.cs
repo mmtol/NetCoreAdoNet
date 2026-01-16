@@ -57,6 +57,7 @@
             lstDepts.Name = "lstDepts";
             lstDepts.Size = new Size(245, 214);
             lstDepts.TabIndex = 1;
+            lstDepts.SelectedIndexChanged += lstDepts_SelectedIndexChanged;
             // 
             // label2
             // 

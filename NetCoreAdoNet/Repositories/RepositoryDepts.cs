@@ -60,6 +60,8 @@ namespace NetCoreAdoNet.Repositories
         {
             int registros;
 
+            command.Parameters.Clear();
+
             SqlParameter paramId = new SqlParameter("@id", dept.IdDept);
             SqlParameter paramNombre = new SqlParameter("@nombre", dept.NombreDept);
             SqlParameter paramLoc = new SqlParameter("@loc", dept.LocalidadDept);
@@ -79,6 +81,8 @@ namespace NetCoreAdoNet.Repositories
         {
             int registros;
 
+            command.Parameters.Clear();
+
             SqlParameter paramId = new SqlParameter("@id", dept.IdDept);
             SqlParameter paramNombre = new SqlParameter("@nombre", dept.NombreDept);
             SqlParameter paramLoc = new SqlParameter("@loc", dept.LocalidadDept);
@@ -97,6 +101,8 @@ namespace NetCoreAdoNet.Repositories
         public async Task<int> DeleteDeptAsync(int id)
         {
             int registros;
+
+            command.Parameters.Clear();
 
             SqlParameter paramId = new SqlParameter("@id", id);
             command.Parameters.Add(paramId);
