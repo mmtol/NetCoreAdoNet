@@ -49,6 +49,11 @@ namespace NetCoreAdoNet
             string oficio = lstOficios.SelectedItem.ToString();
 
             await LoadEmpleados(oficio);
+            await LoadDatosSalarios(oficio);
+        }
+
+        private async Task LoadDatosSalarios(string oficio)
+        {
             await LoadSumaSalarialAsync(oficio);
             await LoadMediaSalarialAsync(oficio);
             await LoadMaxSalarioAsync(oficio);
