@@ -59,7 +59,7 @@ namespace NetCoreAdoNet
             string sql = "select SUM(SALARIO) as DATO from EMP where OFICIO = @oficio";
             int suma = await repo.GetDatoSalarioOficioAsync(oficio, sql);
 
-            lblSumaSalarial.Text = suma.ToString();
+            lblSumaSalarial.Text = "Suma: " + suma.ToString();
         }
 
         private async Task LoadMediaSalarialAsync(string oficio)
@@ -67,7 +67,7 @@ namespace NetCoreAdoNet
             string sql = "select AVG(SALARIO) as DATO from EMP where OFICIO = @oficio";
             int media = await repo.GetDatoSalarioOficioAsync(oficio, sql);
 
-            lblMediaSalarial.Text = media.ToString();
+            lblMediaSalarial.Text = "Media: " + media.ToString();
         }
 
         private async Task LoadMaxSalarioAsync(string oficio)
@@ -75,7 +75,7 @@ namespace NetCoreAdoNet
             string sql = "select MAX(SALARIO) as DATO from EMP where OFICIO = @oficio";
             int max = await repo.GetDatoSalarioOficioAsync(oficio, sql);
 
-            lblMaximoSalario.Text = max.ToString();
+            lblMaximoSalario.Text = "Max: " + max.ToString();
         }
 
         private async Task LoadEmpleados(string oficio)

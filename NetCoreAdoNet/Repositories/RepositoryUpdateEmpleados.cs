@@ -108,7 +108,11 @@ namespace NetCoreAdoNet.Repositories
 
             await conn.OpenAsync();
             reader = await command.ExecuteReaderAsync();
-            dato = reader
+            await reader.ReadAsync();
+            dato = int.Parse(reader["DATO"].ToString());
+
+            await reader.CloseAsync();
+            await conn.CloseAsync();
 
             return dato;
         }
