@@ -1,0 +1,54 @@
+﻿using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
+
+namespace NetCoreAdoNet
+{
+    public partial class Form14Settings : Form
+    {
+        public Form14Settings()
+        {
+            InitializeComponent();
+        }
+
+        private void btnLeer_Click(object sender, EventArgs e)
+        {
+            //NECESITAMOS UN CONSTRUCTOR DE CONFIGURACIONES 
+            ConfigurationBuilder builder =
+    new ConfigurationBuilder();
+            //EN ESTE ENTORNO DE PROYECTO, SETTINGS NO ES NATIVO, ES DECIR 
+            //A PESAR DE LLAMARLO appsettings.json, NO LO RECONOCE 
+            //DEBEMOS INDICAR LA UBICACION DEL FICHERO Y EL NOMBRE 
+            builder.SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", false, true);
+            //NECESITAMOS EL OBJETO PARA RECUPERAR LAS KEYS 
+            IConfigurationRoot configuration = builder.Build();
+            //EXISTEN KEYS YA CONFIGURADAS Y PODEMOS RECUPERARLAS CON METODOS NATIVOS 
+            //LAS KEYS DIFERENCIAN MAYUSCULAS DE MINUSCULAS 
+            string connectionString =
+    configuration.GetConnectionString("SqlLocalTajamar");
+            this.lblSrc.Text = connectionString;
+            //SI NO SON KEYS CONOCIDAS, DEBEMOS NAVEGAR HASTA ELLAS 
+            //LA NAVEGACION ENTRE KEYS SE ESTABLECE MEDIANTE : 
+            //KeyPrincipal:SubKey 
+            //KeyPrincipal:SubKey:OtraSubKey 
+            string imagen1 =
+    configuration.GetSection("Imagenes:vaca").Value;
+            string imagen2 =
+            configuration.GetSection("Imagenes:gallina").Value;
+            string colorLetra =
+            configuration.GetSection("Colores:letra").Value;
+            string colorFondo =
+            configuration.GetSection("Colores:fondo").Value;
+            this.pb1.Load(imagen1);
+            this.pb2.Load(imagen2);
+            this.BackColor = Color.FromName(colorFondo);
+            this.btnLeer.ForeColor = Color.FromName(colorLetra);
+        }
+    }
+}
