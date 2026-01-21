@@ -64,6 +64,7 @@
             cmbDepts.Name = "cmbDepts";
             cmbDepts.Size = new Size(121, 23);
             cmbDepts.TabIndex = 1;
+            cmbDepts.SelectedIndexChanged += cmbDepts_SelectedIndexChanged;
             // 
             // label2
             // 
@@ -115,6 +116,7 @@
             // 
             // txtApellido
             // 
+            txtApellido.Enabled = false;
             txtApellido.Location = new Point(420, 45);
             txtApellido.Name = "txtApellido";
             txtApellido.Size = new Size(100, 23);
@@ -187,6 +189,7 @@
             lstEmpleados.Name = "lstEmpleados";
             lstEmpleados.Size = new Size(210, 289);
             lstEmpleados.TabIndex = 16;
+            lstEmpleados.SelectedIndexChanged += lstEmpleados_SelectedIndexChanged;
             // 
             // btnUpdateEmp
             // 
