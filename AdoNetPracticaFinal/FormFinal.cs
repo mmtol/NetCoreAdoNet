@@ -5,7 +5,7 @@ namespace AdoNetPracticaFinal
 {
     public partial class FormFinal : Form
     {
-        RepositoryFinal repo;
+        private RepositoryFinal repo;
 
         public FormFinal()
         {
